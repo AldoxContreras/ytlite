@@ -15,6 +15,10 @@ jobs:
         with:
           submodules: recursive
 
+      - name: Inicializar y actualizar submódulos
+        run: |
+          git submodule update --init --recursive
+
       - name: Instalar Theos y dependencias
         run: |
           brew install ldid xz
@@ -23,7 +27,9 @@ jobs:
 
       - name: Install RootHide Headers
         run: |
-          curl -sSL https://raw.githubusercontent.com/roothide/Roothide/main/include/roothide.h -o $THEOS/include/roothide.h
+          git clone https://github.com/roothide/Roothide.git /tmp/Roothide
+          mkdir -p $THEOS/include
+          cp /tmp/Roothide/include/roothide.h $THEOS/include/roothide.h
 
       - name: Compilar el tweak (.deb)
         run: |
