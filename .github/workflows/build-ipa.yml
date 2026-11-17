@@ -21,6 +21,10 @@ jobs:
           git clone --recursive https://github.com/theos/theos.git $HOME/theos
           echo "THEOS=$HOME/theos" >> $GITHUB_ENV
 
+      - name: Install RootHide Headers
+        run: |
+          curl -sSL https://raw.githubusercontent.com/roothide/Roothide/main/include/roothide.h -o $THEOS/include/roothide.h
+
       - name: Compilar el tweak (.deb)
         run: |
           make package FINALPACKAGE=1
