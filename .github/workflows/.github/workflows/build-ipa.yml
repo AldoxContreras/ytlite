@@ -1,0 +1,43 @@
+name: Build YouTube Plus IPA
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - name: Clonar repositorio
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Instalar Theos y dependencias
+        run: |
+          brew install ldid xz
+          git clone --recursive https://github.com $HOME/theos
+          echo "THEOS=$HOME/theos" >> $GITHUB_ENV
+
+      - name: Compilar el tweak (.deb)
+        run: |
+          make package FINALPACKAGE=1
+
+      - name: Descargar IPA base de YouTube
+        run: |
+          curl -L -f -H "Authorization: token ${{ secrets.GH_TOKEN }}" "${{ secrets.IPA_URL }}" -o YouTube.ipa
+          file YouTube.ipa
+
+      - name: Instalar Cyan e inyectar tweak
+        run: |
+          pip3 install --upgrade https://github.com
+          DEB_FILE=$(find packages -name "*.deb" | head -n 1)
+          cyan -i YouTube.ipa -o YouTubePlus.ipa -f "$DEB_FILE" -u -c -e
+
+      - name: Subir IPA compilado como Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: YouTubePlus-IPA
+          path: YouTubePlus.ipa
