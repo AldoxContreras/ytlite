@@ -15,9 +15,9 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Inicializar y actualizar submódulos
+      - name: Clonar YouTubeHeader dependency
         run: |
-          git submodule update --init --recursive
+          git clone https://github.com/Dayanch99/YouTubeHeader.git ../YouTubeHeader || git clone https://github.com/PoomSmart/YouTubeHeader.git ../YouTubeHeader
 
       - name: Instalar Theos y dependencias
         run: |
@@ -28,7 +28,6 @@ jobs:
       - name: Install RootHide Headers
         run: |
           mkdir -p $THEOS/include
-          # Crear el header de roothide directamente para evitar errores de clonación
           cat << 'EOF' > $THEOS/include/roothide.h
           #ifndef __ROOTHIDE_H__
           #define __ROOTHIDE_H__
