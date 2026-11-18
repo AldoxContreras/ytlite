@@ -27,9 +27,22 @@ jobs:
 
       - name: Install RootHide Headers
         run: |
-          git clone https://github.com/roothide/Roothide.git /tmp/Roothide
           mkdir -p $THEOS/include
-          cp /tmp/Roothide/include/roothide.h $THEOS/include/roothide.h
+          # Crear el header de roothide directamente para evitar errores de clonación
+          cat << 'EOF' > $THEOS/include/roothide.h
+          #ifndef __ROOTHIDE_H__
+          #define __ROOTHIDE_H__
+          #import <Foundation/Foundation.h>
+          #ifdef __cplusplus
+          extern "C" {
+          #endif
+          NSString *nscp(NSString *path);
+          const char *bootstrap_path(const char *path);
+          #ifdef __cplusplus
+          }
+          #endif
+          #endif
+          EOF
 
       - name: Compilar el tweak (.deb)
         run: |
