@@ -18,9 +18,7 @@ jobs:
       - name: Clonar dependencias externas (YouTubeHeader y Protobuf)
         run: |
           git clone https://github.com/Dayanch99/YouTubeHeader.git ../YouTubeHeader || git clone https://github.com/PoomSmart/YouTubeHeader.git ../YouTubeHeader
-          git clone https://github.com/protocolbuffers/protobuf.git /tmp/protobuf
-          mkdir -p ../protobuf
-          mv /tmp/protobuf/objectivec ../protobuf/objectivec
+          git clone https://github.com/PoomSmart/protobuf-ObjC.git ../protobuf
 
       - name: Instalar Theos y dependencias
         run: |
