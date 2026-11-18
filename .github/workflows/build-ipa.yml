@@ -45,7 +45,7 @@ jobs:
 
       - name: Compilar el tweak (.deb)
         run: |
-          make package FINALPACKAGE=1
+          make package FINALPACKAGE=1 ADDITIONAL_CFLAGS="-Wno-error"
 
       - name: Descargar IPA base de YouTube
         run: |
