@@ -17,15 +17,15 @@ jobs:
 
       - name: Descargar dependencias externas (YouTubeHeader y Protobuf)
         run: |
-          # Descargar y extraer YouTubeHeader
+          # Descargar y extraer YouTubeHeader (rama main)
           curl -sL https://github.com/PoomSmart/YouTubeHeader/archive/refs/heads/main.zip -o /tmp/YouTubeHeader.zip
           unzip -q /tmp/YouTubeHeader.zip -d /tmp/
           mv /tmp/YouTubeHeader-main ../YouTubeHeader
 
-          # Descargar y extraer Protobuf-ObjC
-          curl -sL https://github.com/PoomSmart/protobuf-ObjC/archive/refs/heads/main.zip -o /tmp/protobuf.zip
+          # Descargar y extraer Protobuf-ObjC (rama master)
+          curl -sL https://github.com/PoomSmart/protobuf-ObjC/archive/refs/heads/master.zip -o /tmp/protobuf.zip
           unzip -q /tmp/protobuf.zip -d /tmp/
-          mv /tmp/protobuf-ObjC-main ../protobuf
+          mv /tmp/protobuf-ObjC-master ../protobuf
 
       - name: Instalar Theos y dependencias
         run: |
