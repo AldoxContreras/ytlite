@@ -15,11 +15,17 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Clonar dependencias externas (YouTubeHeader y Protobuf)
+      - name: Descargar dependencias externas (YouTubeHeader y Protobuf)
         run: |
-          # Usar clonación limpia asegurando que no pida credenciales interactivas
-          git clone --depth 1 https://github.com/PoomSmart/YouTubeHeader.git ../YouTubeHeader
-          git clone --depth 1 https://github.com/PoomSmart/protobuf-ObjC.git ../protobuf
+          # Descargar y extraer YouTubeHeader
+          curl -sL https://github.com/PoomSmart/YouTubeHeader/archive/refs/heads/main.zip -o /tmp/YouTubeHeader.zip
+          unzip -q /tmp/YouTubeHeader.zip -d /tmp/
+          mv /tmp/YouTubeHeader-main ../YouTubeHeader
+
+          # Descargar y extraer Protobuf-ObjC
+          curl -sL https://github.com/PoomSmart/protobuf-ObjC/archive/refs/heads/main.zip -o /tmp/protobuf.zip
+          unzip -q /tmp/protobuf.zip -d /tmp/
+          mv /tmp/protobuf-ObjC-main ../protobuf
 
       - name: Instalar Theos y dependencias
         run: |
